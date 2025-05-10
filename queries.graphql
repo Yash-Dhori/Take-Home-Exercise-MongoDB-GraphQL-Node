@@ -1,0 +1,74 @@
+# Sample queries for testing
+
+# 1. Get customer spending
+query {
+  getCustomerSpending(customerId: "adf96a4e-6987-4731-8798-09b109ff65c3") {
+    customerId
+    totalSpent
+    averageOrderValue
+    lastOrderDate
+  }
+}
+
+# 2. Get top-selling products
+query {
+  getTopSellingProducts(limit: 5) {
+    productId
+    name
+    totalSold
+  }
+}
+
+# 3. Get sales analytics
+query {
+  getSalesAnalytics(startDate: "2024-01-01", endDate: "2024-12-31") {
+    totalRevenue
+    completedOrders
+    categoryBreakdown {
+      category
+      revenue
+    }
+  }
+}
+
+# 4. Get customer orders with pagination
+query {
+  getCustomerOrders(
+    customerId: "adf96a4e-6987-4731-8798-09b109ff65c3"
+    page: 1
+    limit: 10
+  ) {
+    orders {
+      _id
+      customerId
+      totalAmount
+      orderDate
+      status
+    }
+    total
+    page
+    totalPages
+  }
+}
+
+# 5. Place an order (mutation)
+mutation {
+  placeOrder(
+    customerId: "7895595e-7f25-47fe-a6f8-94b31bfab736"
+    products: [
+      { productId: "5af13f8d-d1cc-4d7a-bc64-89cf3154077d", quantity: 2 }
+      { productId: "34fad6ef-d906-44ce-ae7a-44453282b0e9", quantity: 1 }
+    ]
+  ) {
+    _id
+    customerId
+    products {
+      productId
+      quantity
+      priceAtPurchase
+    }
+    totalAmount
+    orderDate
+    status
+  }
+}
